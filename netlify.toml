@@ -1,0 +1,35 @@
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/og-image.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Volitelné: návštěvníky s anglickým prohlížečem poslat rovnou na /en/.
+# Odkomentováním se změní výchozí chování kořenové adresy — rozmyslete si to.
+# [[redirects]]
+#   from = "/"
+#   to = "/en/"
+#   status = 302
+#   force = false
+#   conditions = { Language = ["en"] }
