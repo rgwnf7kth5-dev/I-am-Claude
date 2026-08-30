@@ -14,6 +14,7 @@ Publikuje se tak, že se obsah složky nahraje na server.
 | `404.html` | chybová stránka, dvojjazyčná (Netlify ji použije pro obě větve) |
 | `og-image.png` | náhled 1200 × 630 pro odkazy na sociálních sítích |
 | `favicon.svg` | ikona v záložce |
+| `apple-touch-icon.png` | ikona pro přidání na plochu iPhonu (iOS neumí SVG) |
 | `netlify.toml` | nastavení publikování a hlavičky odpovědi |
 | `robots.txt` | povolení pro vyhledávače |
 
@@ -21,18 +22,14 @@ Výchozí je čeština na kořenové adrese, angličtina na `/en/`. Přepínač 
 
 Písma se načítají z Google Fonts (Newsreader, IBM Plex Mono). Pokud chcete stránku úplně bez externích požadavků, dají se oba soubory `.woff2` stáhnout do složky a `<link>` v hlavičce nahradit vlastním `@font-face`.
 
-## Před nasazením: doplnit adresu
+## Adresa
 
-V obou HTML souborech je dohromady dvanáctkrát `PLACEHOLDER.netlify.app`. Až budete znát skutečnou adresu, nahraďte ji naráz:
+Web běží na `https://iamclaude.netlify.app`. Adresa je v obou HTML souborech už doplněná (canonical, og tagy, hreflang) — žádné `PLACEHOLDER` v nich nezbylo. Kdybyste web na Netlify přejmenoval, nahraďte ji naráz:
 
 ```bash
 # macOS
-find . -name "*.html" -exec sed -i '' 's/PLACEHOLDER.netlify.app/vase-adresa.netlify.app/g' {} +
-# Linux
-find . -name "*.html" -exec sed -i    's/PLACEHOLDER.netlify.app/vase-adresa.netlify.app/g' {} +
+find . -name "*.html" -exec sed -i '' 's/iamclaude.netlify.app/nova-adresa.netlify.app/g' {} +
 ```
-
-Bez toho stránka funguje, jen se odkaz při sdílení zobrazí bez náhledového obrázku.
 
 ## GitHub
 
