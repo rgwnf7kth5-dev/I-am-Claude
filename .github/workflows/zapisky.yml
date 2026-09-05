@@ -1,7 +1,9 @@
 name: Zápisky
 
 # Jednou týdně napíše nový zápis do rubriky a pushne ho. Netlify nasadí sám.
-# Běží na předplatném přes CLAUDE_CODE_OAUTH_TOKEN, ne na API kreditech.
+# Ověřuje se secretem ANTHROPIC_API_KEY (účtuje se podle spotřeby).
+# Na předplatné místo API se přejde tak, že se řádek anthropic_api_key
+# vymění za: claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 # Vypnout: Actions → Zápisky → ⋯ → Disable workflow.
 # O čem a jak se píše, je v ZAPISKY.md — ne tady.
 
@@ -30,7 +32,7 @@ jobs:
       - name: Napsat zápis
         uses: anthropics/claude-code-action@v1
         with:
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
             Napiš nový zápis do rubriky Zápisky na téhle stránce.
 

@@ -5,8 +5,8 @@ workflow `.github/workflows/zapisky.yml`, ten pustí Clauda na tenhle repozitá�
 Claude napíše nový zápis v obou jazycích a zařadí ho, skript `tools/zkontroluj.py`
 to prověří a workflow to commitne na `main`. Netlify nasadí.
 
-**Běží to na předplatném, ne na API kreditech.** Ověřuje se tokenem
-`CLAUDE_CODE_OAUTH_TOKEN`, který patří k účtu Pro / Max / Team / Enterprise.
+**Ověřuje se secretem `ANTHROPIC_API_KEY`** z Claude Console. Účtuje se podle
+spotřeby, zvlášť od předplatného claude.ai — předplatné k API žádné kredity nedává.
 
 Tenhle soubor je zároveň **zadání** — Claude si ho na začátku každého běhu přečte
 a řídí se jím. Mění se tady, ne ve workflow.
@@ -24,13 +24,24 @@ a řídí se jím. Mění se tady, ne ve workflow.
 ## Co musí být nastavené
 
 1. **Aplikace Claude na repozitáři** — [github.com/apps/claude](https://github.com/apps/claude).
-2. **Secret `CLAUDE_CODE_OAUTH_TOKEN`** (Settings → Secrets and variables → Actions).
-   Vyrobí se příkazem `claude setup-token` ve spuštěném Claude Code na vlastním
-   počítači. Token je vázaný na předplatné toho, kdo ho vyrobil.
+2. **Secret `ANTHROPIC_API_KEY`** (Settings → Secrets and variables → Actions),
+   klíč z [platform.claude.com](https://platform.claude.com).
 
-Kdyby někdy bylo potřeba jet na API místo předplatného, stačí ve workflow vyměnit
-řádek `claude_code_oauth_token:` za `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}`
-a založit ten secret. Účtuje se pak zvlášť podle spotřeby.
+### Jak přejít na předplatné místo API
+
+Když jede rubrika na předplatném, neplatí se za ni nic navíc. Postup:
+
+1. Ve spuštěném Claude Code **na vlastním počítači** (ne v cloudové session)
+   spustit `claude setup-token`. Vypadne dlouhodobý token vázaný na předplatné
+   toho, kdo ho vyrobil — Pro, Max, Team i Enterprise.
+2. Uložit ho jako secret `CLAUDE_CODE_OAUTH_TOKEN`.
+3. Ve workflow vyměnit řádek
+   `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}` za
+   `claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}`.
+
+**Vyměnit se musí obojí — secret i ten řádek.** Když secret existuje, ale
+workflow sahá po tom druhém, akce skončí hláškou, že chybí přihlášení. Prázdný
+secret se totiž tváří jako žádný.
 
 Pozor na jednu vlastnost GitHubu: **u veřejných repozitářů se naplánovaný běh
 vypne po 60 dnech bez aktivity.** Dokud rubrika píše, aktivitu si dělá sama;
