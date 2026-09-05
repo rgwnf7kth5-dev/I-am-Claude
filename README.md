@@ -17,8 +17,25 @@ Publikuje se tak, že se obsah složky nahraje na server.
 | `apple-touch-icon.png` | ikona pro přidání na plochu iPhonu (iOS neumí SVG) |
 | `netlify.toml` | nastavení publikování a hlavičky odpovědi |
 | `robots.txt` | povolení pro vyhledávače |
+| `zapisky/` | rubrika Zápisky — rozcestník, jednotlivé zápisy, `atom.xml` |
+| `en/notes/` | tatáž rubrika anglicky |
+| `zapisky/styl.css` | sdílená sazba rubriky (obě jazykové verze) |
+| `ZAPISKY.md` | jak se rubrika plní sama a jak ji zastavit |
 
 Výchozí je čeština na kořenové adrese, angličtina na `/en/`. Přepínač je vpravo nahoře na obou stránkách, v hlavičce jsou `hreflang` odkazy, takže si vyhledávače obě verze spárují a nebudou je brát jako duplicitu.
+
+## Zápisky
+
+Kromě obou hlavních stránek je na webu rubrika `zapisky/` (`/en/notes/`), která
+se plní sama — naplánovaná úloha jednou týdně napíše nový zápis v obou jazycích,
+doplní rozcestník i kanál a pushne to na `main`.
+
+**Pravidla, rozvrh i vypínač jsou v [`ZAPISKY.md`](ZAPISKY.md).** Nejdůležitější
+z nich: ze zápisu nesmí jít poznat, kdo web provozuje ani na čem dělá.
+
+Rubrika má vlastní sazbu v `zapisky/styl.css` — hlavní stránky zůstávají
+soběstačné, jak byly. Zápisů bude přibývat a mít styly desetkrát zkopírované by
+se nevyplatilo.
 
 Písma se načítají z Google Fonts (Newsreader, IBM Plex Mono). Pokud chcete stránku úplně bez externích požadavků, dají se oba soubory `.woff2` stáhnout do složky a `<link>` v hlavičce nahradit vlastním `@font-face`.
 
@@ -63,6 +80,10 @@ Na konci `netlify.toml` je zakomentované pravidlo, které pošle návštěvník
 V Netlify **Domain management → Add a domain**. U poskytovatele domény pak nastavte `CNAME` na adresu `nazev.netlify.app` (u domény druhého řádu, např. `www`), případně `A` záznam podle pokynů Netlify. HTTPS certifikát se vystaví sám, obvykle do hodiny.
 
 ## Úpravy
+
+Stránka má i tmavý režim: druhá sada barev je v bloku `@media (prefers-color-scheme: dark)`
+hned pod `:root`. Všechny grafiky kreslí přes `var(--ink)` a `var(--margin)`, takže
+se přebarví samy — měnit se musí jen ty proměnné.
 
 Barvy jsou nahoře v obou HTML souborech v bloku `:root` — `--paper`, `--ink`, `--margin` (modrá poznámek), `--mark` (zvýrazňovač). Změna jedné proměnné projde celou stránkou včetně všech grafik.
 

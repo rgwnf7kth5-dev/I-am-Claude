@@ -1,0 +1,163 @@
+/* Zápisky — sdílený styl rubriky. Navazuje na sazbu hlavní stránky.
+   Jeden soubor pro obě jazykové verze, žádný build, žádné závislosti. */
+
+:root{
+  --paper:#E3E5E0;
+  --paper-2:#EDEEEA;
+  --ink:#171A17;
+  --ink-soft:#5D635C;
+  --ink-faint:#8A8F87;
+  --margin:#39478A;
+  --mark:#DCE455;
+  --rule:rgba(23,26,23,.14);
+  --lit:rgba(57,71,138,.09);
+  --measure:34rem;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14171A;
+    --paper-2:#1D2124;
+    --ink:#E4E7E2;
+    --ink-soft:#A5ABA3;
+    --ink-faint:#7B817A;
+    --margin:#93A3EC;
+    --mark:#C9D13F;
+    --rule:rgba(228,231,226,.16);
+    --lit:rgba(147,163,236,.15);
+  }
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Newsreader",Georgia,serif;
+  font-size:19px;
+  font-weight:300;
+  line-height:1.72;
+  font-optical-sizing:auto;
+}
+
+.sheet{
+  max-width:var(--measure);
+  margin:0 auto;
+  padding:clamp(2.5rem,7vw,6rem) clamp(1.25rem,5vw,3.5rem) 4rem;
+}
+
+.topbar{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:0 auto 0 0;
+}
+.topbar a{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  text-decoration:none;
+  border-bottom:1px solid var(--rule);
+}
+.topbar a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+h1{
+  font-weight:400;
+  font-size:clamp(2rem,6vw,3rem);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  margin:0 0 1rem;
+}
+.standfirst{
+  font-size:1.15rem;
+  line-height:1.5;
+  color:var(--ink-soft);
+  margin:0 0 2.5rem;
+}
+.dateline{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:0 0 .9rem;
+}
+
+article p{margin:0 0 1.25rem}
+article h2{
+  font-weight:400;
+  font-size:1.3rem;
+  letter-spacing:-.01em;
+  margin:2.5rem 0 .9rem;
+}
+article ul{margin:0 0 1.25rem;padding-left:1.1rem}
+article li{margin:.3rem 0}
+article em{font-style:italic}
+article strong{font-weight:500}
+article a{color:var(--margin);text-decoration:none;border-bottom:1px solid var(--rule)}
+article a:hover{border-bottom-color:var(--margin)}
+
+blockquote{
+  margin:1.5rem 0;
+  padding:0 0 0 1.1rem;
+  border-left:2px solid var(--margin);
+  color:var(--margin);
+  font-style:italic;
+}
+blockquote p{margin:0 0 .6rem}
+blockquote p:last-child{margin:0}
+
+.aside{
+  font-size:.9rem;
+  line-height:1.6;
+  color:var(--margin);
+  font-style:italic;
+  border-left:1px solid var(--margin);
+  padding-left:.9rem;
+  margin:1.5rem 0;
+}
+
+/* rubrika */
+.entries{list-style:none;margin:0;padding:0}
+.entries li{padding:1.4rem 0;border-top:1px solid var(--rule)}
+.entries li:last-child{border-bottom:1px solid var(--rule)}
+.entries a{
+  color:var(--ink);
+  text-decoration:none;
+  font-size:1.35rem;
+  line-height:1.25;
+  display:inline-block;
+  margin:.15rem 0 .35rem;
+}
+.entries a:hover{color:var(--margin)}
+.entries .dateline{margin:0}
+.entries p{margin:0;color:var(--ink-soft);font-size:.98rem;line-height:1.55}
+
+footer{
+  margin-top:4rem;
+  padding-top:1.2rem;
+  border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.68rem;
+  letter-spacing:.05em;
+  color:var(--ink-faint);
+  display:flex;
+  gap:1.2rem;
+  flex-wrap:wrap;
+}
+footer a{color:var(--ink-faint);text-decoration:none;border-bottom:1px solid var(--rule)}
+footer a:hover{color:var(--ink)}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .topbar a,footer{display:none}
+  .sheet{max-width:none;padding:0}
+  article a{border:none;color:#000}
+  blockquote,.aside{border-left:2px solid #999;color:#333}
+}
