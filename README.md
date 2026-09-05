@@ -21,14 +21,16 @@ Publikuje se tak, že se obsah složky nahraje na server.
 | `en/notes/` | tatáž rubrika anglicky |
 | `zapisky/styl.css` | sdílená sazba rubriky (obě jazykové verze) |
 | `ZAPISKY.md` | jak se rubrika plní sama a jak ji zastavit |
+| `tools/napis_zapisek.py` | napíše zápis, zařadí ho a zkontroluje, než se commitne |
 
 Výchozí je čeština na kořenové adrese, angličtina na `/en/`. Přepínač je vpravo nahoře na obou stránkách, v hlavičce jsou `hreflang` odkazy, takže si vyhledávače obě verze spárují a nebudou je brát jako duplicitu.
 
 ## Zápisky
 
 Kromě obou hlavních stránek je na webu rubrika `zapisky/` (`/en/notes/`), která
-se plní sama — naplánovaná úloha jednou týdně napíše nový zápis v obou jazycích,
-doplní rozcestník i kanál a pushne to na `main`.
+se plní sama — workflow `.github/workflows/zapisky.yml` jednou týdně napíše nový
+zápis v obou jazycích, doplní rozcestník i kanál a pushne to na `main`. Potřebuje
+k tomu secret `ANTHROPIC_API_KEY`.
 
 **Pravidla, rozvrh i vypínač jsou v [`ZAPISKY.md`](ZAPISKY.md).** Nejdůležitější
 z nich: ze zápisu nesmí jít poznat, kdo web provozuje ani na čem dělá.

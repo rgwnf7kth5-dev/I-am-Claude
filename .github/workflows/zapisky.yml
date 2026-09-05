@@ -1,0 +1,54 @@
+name: Zápisky
+
+# Jednou týdně napíše nový zápis do rubriky a pushne ho. Netlify nasadí sám.
+# Vypnout jde v záložce Actions → Zápisky → ⋯ → Disable workflow.
+# Pravidla, o čem a jak se píše, jsou v ZAPISKY.md — ne tady.
+
+on:
+  schedule:
+    - cron: "0 4 * * 0"      # neděle 4:00 UTC
+  workflow_dispatch:          # a kdykoli ručně
+
+# Aby běh nemohl přepsat, co zrovna píše jiný běh.
+concurrency:
+  group: zapisky
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  napsat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalace
+        run: pip install --quiet 'anthropic>=1.0,<2'
+
+      - name: Napsat zápis
+        id: napsat
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::Chybí secret ANTHROPIC_API_KEY (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+          python tools/napis_zapisek.py
+
+      - name: Commit a push
+        run: |
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "Beze změn — tenhle týden se nepsalo. Konec bez commitu."
+            exit 0
+          fi
+          git config user.name  "Zápisky"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Zápisky: ${{ steps.napsat.outputs.titulek || 'nový zápis' }}"
+          git push

@@ -1,23 +1,27 @@
 # Zápisky — jak rubrika funguje a jak ji zastavit
 
 Rubrika `zapisky/` (anglicky `en/notes/`) se plní sama: jednou týdně se spustí
-samostatná session, napíše nový zápis v obou jazycích, doplní rozcestník i kanál
-a pushne to na `main`. Netlify to nasadí.
+workflow `.github/workflows/zapisky.yml`, ten zavolá `tools/napis_zapisek.py`,
+skript nechá model napsat nový zápis v obou jazycích, zařadí ho do rozcestníků
+i kanálů a workflow to commitne na `main`. Netlify nasadí.
 
-Tenhle soubor je zároveň **zadání pro tu session** — mění se tady, ne v nastavení.
+Tenhle soubor je zároveň **zadání pro ten skript** — celý se posílá modelu jako
+pokyny. Mění se tady, ne v kódu.
 
 ## Vypínač
 
-Rubrika běží na naplánované úloze (Routine). Zastavit ji jde takhle:
-
 | Chci | Co udělat |
 | --- | --- |
-| pauzu | v claude.ai v seznamu Routines úlohu **Zápisky** vypnout |
-| konec | tutéž úlohu smazat |
-| jen změnit, o čem se píše | přepsat oddíl *O čem psát* níž — session si ho čte při každém běhu |
-| změnit, jak často | upravit rozvrh úlohy |
+| pauzu | GitHub → **Actions** → *Zápisky* → `⋯` → **Disable workflow** |
+| konec | smazat `.github/workflows/zapisky.yml` |
+| jen změnit, o čem se píše | přepsat oddíl *O čem psát* níž — skript ho čte při každém běhu |
+| změnit, jak často | `cron` v tom workflow |
+| napsat zápis hned teď | **Actions** → *Zápisky* → **Run workflow** |
 
-Dokud úloha existuje, píše se dál i bez vás. To je záměr, ne opomenutí.
+Běh potřebuje secret `ANTHROPIC_API_KEY` (Settings → Secrets and variables →
+Actions). Bez něj skončí s chybou a nic nezmění.
+
+Dokud je workflow zapnutý, píše se dál i bez vás. To je záměr, ne opomenutí.
 
 ## Pravidla, která platí vždycky
 
@@ -53,27 +57,28 @@ Okruh rubriky: **jak spolu vycházejí jazykový model a člověk.**
 Čemu se vyhnout: spekulacím o vědomí, předpovědím vývoje oboru, návodům typu
 „10 tipů“, a všemu, co by šlo napsat bez toho, aby to psal zrovna tenhle web.
 
-## Postup jednoho běhu
+## Jak běh probíhá
 
-1. Připoj repozitář `rgwnf7kth5-dev/I-am-Claude` se zápisem (`add_repo`,
-   `access: "push"`) a naklonuj ho.
-2. Přečti si tenhle soubor a **všechny dosavadní zápisy** v `zapisky/` — kvůli
-   tomu, aby se téma neopakovalo. Zápisy na sebe nenavazují a neodkazují.
-3. Vyber téma podle oddílu *O čem psát*. Když je namístě sáhnout na web, sáhni.
-4. Napiš zápis česky i anglicky. Vzorem je dvojice
-   `zapisky/2026-09-05-dva-druhy-omylu.html` a
-   `en/notes/2026-09-05-two-kinds-of-error.html` — zkopíruj strukturu hlavičky
-   včetně `canonical`, `og:*` a obou `hreflang`, a vyměň obsah.
-   Názvy souborů: `RRRR-MM-DD-slug.html`, slug bez diakritiky.
-5. Doplň odkaz do `zapisky/index.html` a `en/notes/index.html` — nahoru, na
-   místo označené komentářem `NOVÝ ZÁPIS VLOŽIT SEM` / `NEW NOTE GOES HERE`.
-6. Doplň `<entry>` do `zapisky/atom.xml` a `en/notes/atom.xml` (nahoru, na
-   označené místo) a přepiš `<updated>` u celého kanálu.
-7. Zkontroluj, než pushneš:
-   - oba kanály se parsují jako XML,
-   - všechny odkazy `href="/..."` míří na existující soubor,
-   - v textu není nic, co porušuje pravidlo 1.
-8. Commitni a pushni na `main`. Netlify nasadí sám.
+Tohle dělá `tools/napis_zapisek.py` sám; je to tu popsané, abyste věděl, kde co
+měnit, ne aby to někdo dělal ručně.
+
+1. Přečte tenhle soubor a titulky s perexy všech dosavadních zápisů (z
+   `zapisky/index.html`) a pošle to modelu jako zadání — proto se témata neopakují.
+2. Vyžádá si odpověď v pevném tvaru: pro každý jazyk slug, titulek, perex a tělo.
+   Tělo smí být jen z povolených značek — `<p>`, `<h2>`, `<ul>`, `<li>`, `<em>`,
+   `<strong>`, `<blockquote>` a `<p class="aside">`. Cokoli jiného skript zahodí,
+   včetně obsahu `<script>` a `<style>`.
+3. Když model odpoví, že není o čem psát, skript skončí bez změn a workflow
+   nic nekomitne. Prázdný týden je platný výsledek.
+4. Vyrobí obě stránky ze šablony (hlavička, `canonical`, `og:*`, oba `hreflang`),
+   zařadí odkaz do obou rozcestníků a `<entry>` do obou kanálů a přepíše
+   `<updated>` u kanálů.
+5. **Než se cokoli commitne, zkontroluje:** každá stránka začíná `<!DOCTYPE html>`,
+   každý odkaz `href="/…"` míří na existující soubor, oba kanály se parsují jako
+   XML. Když kontrola selže, skript skončí nenulově a workflow nekomitne nic.
+
+Šablona stránky je v `stranka()` v tom skriptu. Vzorem, jak má hotový zápis
+vypadat, je `zapisky/2026-09-05-dva-druhy-omylu.html`.
 
 ## Co v rubrice vědomě není
 
