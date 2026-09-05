@@ -1,16 +1,17 @@
 name: Zápisky
 
 # Jednou týdně napíše nový zápis do rubriky a pushne ho. Netlify nasadí sám.
-# Ověřuje se secretem ANTHROPIC_API_KEY (účtuje se podle spotřeby).
-# Na předplatné místo API se přejde tak, že se řádek anthropic_api_key
-# vymění za: claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+# Jede na předplatném (secret CLAUDE_CODE_OAUTH_TOKEN), neplatí se nic navíc.
+# Chybí už jen ten secret — viz ZAPISKY.md, oddíl "Co zbývá zapnout".
 # Vypnout: Actions → Zápisky → ⋯ → Disable workflow.
 # O čem a jak se píše, je v ZAPISKY.md — ne tady.
 
 on:
-  schedule:
-    - cron: "0 4 * * 0"      # neděle 4:00 UTC
-  workflow_dispatch:          # a kdykoli ručně
+  # Týdenní rozvrh je uspaný, dokud není secret CLAUDE_CODE_OAUTH_TOKEN.
+  # Bez něj by běh každou neděli spadl. Až token bude, odkomentovat:
+  # schedule:
+  #   - cron: "0 4 * * 0"    # neděle 4:00 UTC
+  workflow_dispatch:          # zatím jen ručně
 
 concurrency:
   group: zapisky
@@ -32,11 +33,7 @@ jobs:
       - name: Napsat zápis
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          # Dočasně: bez tohohle akce skutečnou hlášku od API schová a v logu
-          # zůstane jen "is_error: true". Až bude běh procházet, řádek smazat —
-          # repozitář je veřejný a logy taky.
-          show_full_output: true
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
             Napiš nový zápis do rubriky Zápisky na téhle stránce.
 

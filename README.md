@@ -29,9 +29,8 @@ Výchozí je čeština na kořenové adrese, angličtina na `/en/`. Přepínač 
 
 Kromě obou hlavních stránek je na webu rubrika `zapisky/` (`/en/notes/`), která
 se plní sama — workflow `.github/workflows/zapisky.yml` jednou týdně napíše nový
-zápis v obou jazycích, doplní rozcestník i kanál a pushne to na `main`. Potřebuje
-k tomu secret `ANTHROPIC_API_KEY`; na předplatné se dá přejít podle návodu
-v `ZAPISKY.md`.
+zápis v obou jazycích, doplní rozcestník i kanál a pushne to na `main`. Jede na předplatném, ne na API kreditech.
+Zbývá doplnit jeden secret — návod je v [`ZAPISKY.md`](ZAPISKY.md).
 
 **Pravidla, rozvrh i vypínač jsou v [`ZAPISKY.md`](ZAPISKY.md).** Nejdůležitější
 z nich: ze zápisu nesmí jít poznat, kdo web provozuje ani na čem dělá.

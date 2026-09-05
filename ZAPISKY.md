@@ -5,8 +5,8 @@ workflow `.github/workflows/zapisky.yml`, ten pustí Clauda na tenhle repozitá�
 Claude napíše nový zápis v obou jazycích a zařadí ho, skript `tools/zkontroluj.py`
 to prověří a workflow to commitne na `main`. Netlify nasadí.
 
-**Ověřuje se secretem `ANTHROPIC_API_KEY`** z Claude Console. Účtuje se podle
-spotřeby, zvlášť od předplatného claude.ai — předplatné k API žádné kredity nedává.
+**Jede to na předplatném, ne na API kreditech.** Za rubriku se tedy neplatí nic
+navíc. Chybí k tomu poslední kousek — viz níž.
 
 Tenhle soubor je zároveň **zadání** — Claude si ho na začátku každého běhu přečte
 a řídí se jím. Mění se tady, ne ve workflow.
@@ -21,33 +21,38 @@ a řídí se jím. Mění se tady, ne ve workflow.
 | změnit, jak často | `cron` v tom workflow |
 | napsat zápis hned teď | **Actions** → *Zápisky* → **Run workflow** |
 
-## Co musí být nastavené
+## Co zbývá zapnout
 
-1. **Aplikace Claude na repozitáři** — [github.com/apps/claude](https://github.com/apps/claude).
-2. **Secret `ANTHROPIC_API_KEY`** (Settings → Secrets and variables → Actions),
-   klíč z [platform.claude.com](https://platform.claude.com).
+Rubrika je hotová a stránky stojí. Nespouští se sama, protože chybí přihlášení.
+Jsou to dva kroky a ani jeden nic nestojí:
 
-### Jak přejít na předplatné místo API
+1. **Vyrobit token.** Ve spuštěném Claude Code **na vlastním počítači** — ne
+   v cloudové session — spustit:
 
-Když jede rubrika na předplatném, neplatí se za ni nic navíc. Postup:
+   ```
+   claude setup-token
+   ```
 
-1. Ve spuštěném Claude Code **na vlastním počítači** (ne v cloudové session)
-   spustit `claude setup-token`. Vypadne dlouhodobý token vázaný na předplatné
-   toho, kdo ho vyrobil — Pro, Max, Team i Enterprise.
-2. Uložit ho jako secret `CLAUDE_CODE_OAUTH_TOKEN`.
-3. Ve workflow vyměnit řádek
-   `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}` za
-   `claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}`.
+   Token je vázaný na předplatné toho, kdo ho vyrobil (Pro, Max, Team,
+   Enterprise). Cloudová session ho vyrobit nemůže: není přihlášená pod vaším
+   účtem a nemá prohlížeč, ve kterém byste souhlas odklikl.
 
-**Vyměnit se musí obojí — secret i ten řádek.** Když secret existuje, ale
-workflow sahá po tom druhém, akce skončí hláškou, že chybí přihlášení. Prázdný
-secret se totiž tváří jako žádný.
+2. **Uložit ho** jako secret `CLAUDE_CODE_OAUTH_TOKEN`
+   (Settings → Secrets and variables → Actions).
 
-Pozor na jednu vlastnost GitHubu: **u veřejných repozitářů se naplánovaný běh
-vypne po 60 dnech bez aktivity.** Dokud rubrika píše, aktivitu si dělá sama;
-kdyby se na dlouho zastavila, je potřeba rozvrh znovu zapnout.
+Pak už jen v `.github/workflows/zapisky.yml` odkomentovat `schedule:` — rozvrh je
+zatím uspaný, aby běh každou neděli nespadl na chybějícím přihlášení. Do té doby
+jde rubriku spustit ručně: **Actions → Zápisky → Run workflow**.
 
-Dokud je workflow zapnutý, píše se dál i bez vás. To je záměr, ne opomenutí.
+Potřeba je taky **aplikace Claude na repozitáři** — [github.com/apps/claude](https://github.com/apps/claude).
+
+### Proč ne API klíč
+
+Klíč z Claude Console je samostatný produkt s vlastním účtováním; předplatné
+claude.ai k němu žádné kredity nedává a na nové organizaci je nulový zůstatek,
+takže první request skončí chybou. Rubrika na API jet umí — stačí vyměnit řádek
+`claude_code_oauth_token:` za `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}`
+a nabít kredit — ale znamená to platit podruhé za něco, co předplatné pokrývá.
 
 ## Pravidla, která platí vždycky
 
