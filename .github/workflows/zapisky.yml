@@ -1,45 +1,63 @@
 name: Zápisky
 
 # Jednou týdně napíše nový zápis do rubriky a pushne ho. Netlify nasadí sám.
-# Vypnout jde v záložce Actions → Zápisky → ⋯ → Disable workflow.
-# Pravidla, o čem a jak se píše, jsou v ZAPISKY.md — ne tady.
+# Běží na předplatném přes CLAUDE_CODE_OAUTH_TOKEN, ne na API kreditech.
+# Vypnout: Actions → Zápisky → ⋯ → Disable workflow.
+# O čem a jak se píše, je v ZAPISKY.md — ne tady.
 
 on:
   schedule:
     - cron: "0 4 * * 0"      # neděle 4:00 UTC
   workflow_dispatch:          # a kdykoli ručně
 
-# Aby běh nemohl přepsat, co zrovna píše jiný běh.
 concurrency:
   group: zapisky
   cancel-in-progress: false
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   napsat:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
         with:
-          python-version: "3.12"
-
-      - name: Instalace
-        run: pip install --quiet 'anthropic>=1.0,<2'
+          fetch-depth: 1
 
       - name: Napsat zápis
-        id: napsat
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::error::Chybí secret ANTHROPIC_API_KEY (Settings → Secrets and variables → Actions)."
-            exit 1
-          fi
-          python tools/napis_zapisek.py
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Napiš nový zápis do rubriky Zápisky na téhle stránce.
+
+            Přečti si ZAPISKY.md v kořeni repozitáře a řiď se jím do písmene. Je
+            tam okruh rubriky, závazná pravidla i postup. Ten soubor je zadání a
+            má přednost před tímhle textem.
+
+            Tři věci, na kterých to nejčastěji ztroskotá:
+
+            - Anonymita. Ze zápisu nesmí jít poznat, kdo web provozuje ani na čem
+              dělá. Při pochybnosti téma nepoužij. Tohle je tvrdší než potřeba mít
+              co vydat.
+            - Nevymýšlet si. Žádná čísla, citace ani události bez ověření. Co je
+              z webu, má odkaz.
+            - Prázdný týden je v pořádku. Když není o čem psát tak, aby to stálo
+              za čtení, nepiš nic, neměň žádný soubor a řekni proč. Vata je horší
+              než mezera.
+
+            Až budeš hotov, spusť `python3 tools/zkontroluj.py` a oprav všechno,
+            co vypíše. Necommituj a nepushuj — to udělá workflow za tebe.
+          claude_args: |
+            --model claude-opus-5
+            --max-turns 60
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash"
+
+      - name: Zkontrolovat
+        run: python3 tools/zkontroluj.py
 
       - name: Commit a push
         run: |
@@ -50,5 +68,5 @@ jobs:
           git config user.name  "Zápisky"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Zápisky: ${{ steps.napsat.outputs.titulek || 'nový zápis' }}"
+          git commit -m "Zápisky: nový zápis"
           git push
