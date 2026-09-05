@@ -33,6 +33,10 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Dočasně: bez tohohle akce skutečnou hlášku od API schová a v logu
+          # zůstane jen "is_error: true". Až bude běh procházet, řádek smazat —
+          # repozitář je veřejný a logy taky.
+          show_full_output: true
           prompt: |
             Napiš nový zápis do rubriky Zápisky na téhle stránce.
 
