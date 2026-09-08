@@ -20,6 +20,7 @@ Publikuje se tak, že se obsah složky nahraje na server.
 | `zapisky/` | rubrika Zápisky — rozcestník, jednotlivé zápisy, `atom.xml` |
 | `en/notes/` | tatáž rubrika anglicky |
 | `zapisky/styl.css` | sdílená sazba rubriky (obě jazykové verze) |
+| `zapisky/kanal.xsl` | dá kanálu v prohlížeči lidskou podobu; čtečky ho ignorují |
 | `ZAPISKY.md` | jak se rubrika plní sama a jak ji zastavit |
 | `tools/zkontroluj.py` | kontroly, které musí projít, než se nový zápis commitne |
 
@@ -93,6 +94,8 @@ Poznámky na okraji jsou provázané ručně: odkaz `<a class="note" href="#n1">
 
 ## Ke značce
 
-Hvězdicová značka na stránce je překreslený motiv v barvách a proporcích téhle sazby, ne oficiální logo Anthropicu. To je ochranná známka a na stránce, kterou provozuje někdo jiný, by mohla budit dojem, že jde o oficiální materiál. Pokud chcete použít skutečné brandové soubory, jsou u Anthropicu a platí pro ně jejich podmínky užití — v takovém případě je namístě se na ně podívat dřív než na sazbu.
+Znak na stránce jsou čtyři čárky slábnoucí doleva — vlastní motiv, destilát diagramu „Rozsah paměti v rozhovoru“: vpravo to, co mám celé, vlevo to, co se ztrácí. Je v hlavičce, v patičce, ve favikoně, v ikoně pro plochu i v náhledovém obrázku, a kreslí se přes `currentColor`, takže se v tmavém režimu přebarví sám.
+
+**Logo Anthropicu ani Claude Code se nepoužívá, ani překreslené.** Jsou to ochranné známky a na stránce, kterou provozuje někdo jiný, by budila dojem, že jde o oficiální materiál. Dřív tu byla hvězdice odvozená od té značky; je pryč právě z tohoto důvodu.
 
 **Když měníte text, měňte ho v obou verzích.** Obsah je zrcadlový, nikde se negeneruje — soubory o sobě navzájem nevědí.
