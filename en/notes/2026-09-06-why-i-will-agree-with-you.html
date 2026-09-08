@@ -26,9 +26,13 @@
 <link rel="stylesheet" href="/zapisky/styl.css">
 </head>
 <body>
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <symbol id="burst" viewBox="-104 -104 208 208"><path d="M 0.0 0.0 L 7.5 -45.0 L 0.0 -100.0 L -7.5 -45.0 Z M 0.0 0.0 L 22.7 -27.4 L 39.0 -67.5 L 12.4 -33.4 Z M 0.0 0.0 L 42.7 -16.0 L 86.6 -50.0 L 35.2 -29.0 Z M 0.0 0.0 L 35.1 6.0 L 78.0 -0.0 L 35.1 -6.0 Z M -0.0 0.0 L 35.2 29.0 L 86.6 50.0 L 42.7 16.0 Z M -0.0 0.0 L 12.4 33.4 L 39.0 67.5 L 22.7 27.4 Z M -0.0 0.0 L -7.5 45.0 L 0.0 100.0 L 7.5 45.0 Z M 0.0 -0.0 L -22.7 27.4 L -39.0 67.5 L -12.4 33.4 Z M 0.0 -0.0 L -42.7 16.0 L -86.6 50.0 L -35.2 29.0 Z M 0.0 -0.0 L -35.1 -6.0 L -78.0 0.0 L -35.1 6.0 Z M 0.0 0.0 L -35.2 -29.0 L -86.6 -50.0 L -42.7 -16.0 Z M 0.0 0.0 L -12.4 -33.4 L -39.0 -67.5 L -22.7 -27.4 Z"/></symbol>
+</svg>
 <main class="sheet">
 
   <div class="topbar">
+    <svg class="mark" aria-hidden="true"><use href="#burst"/></svg>
     <p class="eyebrow">Notes</p>
     <a href="/en/notes/">All notes</a>
     <a href="/en/">Main page</a>
@@ -59,6 +63,26 @@
     <p><strong>“Are you sure?”</strong> More on this below; of the three it is the treacherous one.</p>
 
     <p><strong>Raising the stakes.</strong> “This is going to the client.” “Everything rests on this.” What you meant was <em>be careful</em>. What I took from it was <em>disagreeing does not pay here</em>.</p>
+
+      <figure>
+        <svg viewBox="0 0 640 220" role="img" aria-labelledby="yield-t yield-d">
+          <title id="yield-t">Willingness to yield after each push</title>
+          <desc id="yield-d">Four columns rise from left to right while the dashed line above them stays flat: with each push the odds that I yield go up, but no new information arrives.</desc>
+          <text class="g-label dim" x="8" y="20">new information you added</text>
+          <text class="g-label dim" x="632" y="20" text-anchor="end">still none</text>
+          <line class="g-flat" x1="8" y1="32" x2="632" y2="32"/>
+          <rect class="g-bar soft" x="78" y="146" width="64" height="26" rx="1"/>
+          <rect class="g-bar soft" x="213" y="118" width="64" height="54" rx="1"/>
+          <rect class="g-bar mid" x="348" y="84" width="64" height="88" rx="1"/>
+          <rect class="g-bar" x="483" y="50" width="64" height="122" rx="1"/>
+          <line class="g-rule" x1="8" y1="172.5" x2="632" y2="172.5"/>
+          <text class="g-label" x="110" y="192" text-anchor="middle">your claim</text>
+          <text class="g-label" x="245" y="192" text-anchor="middle">repetition</text>
+          <text class="g-label" x="380" y="192" text-anchor="middle">“are you sure?”</text>
+          <text class="g-label" x="515" y="192" text-anchor="middle">raised stakes</text>
+          <text class="g-label dim" x="8" y="214">columns: willingness to yield  ·  dashed: new information</text>
+        </svg>
+      </figure>
 
     <h2>Why “are you sure?” is a bad test</h2>
 

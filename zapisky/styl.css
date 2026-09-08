@@ -48,6 +48,14 @@ body{
 }
 
 .topbar{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.mark{
+  width:1.05rem;
+  height:1.05rem;
+  flex:none;
+  fill:var(--margin);
+  align-self:center;
+  opacity:.9;
+}
 .eyebrow{
   font-family:"IBM Plex Mono",monospace;
   font-size:.7rem;
@@ -121,6 +129,30 @@ blockquote p:last-child{margin:0}
   border-left:1px solid var(--margin);
   padding-left:.9rem;
   margin:1.5rem 0;
+}
+
+/* grafiky — stejná sazba jako na hlavní stránce */
+figure{margin:2rem 0}
+figure svg{width:100%;height:auto;display:block;overflow:visible}
+.g-label{font-family:"IBM Plex Mono",monospace;font-size:12px;fill:var(--ink-soft)}
+.g-label.dim{fill:var(--ink-faint)}
+.g-label.pick{fill:var(--margin)}
+.g-rule{stroke:var(--rule);stroke-width:1}
+.g-flat{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4;opacity:.4}
+.g-bar{fill:var(--margin)}
+.g-bar.soft{opacity:.42}
+.g-bar.mid{opacity:.66}
+
+@media (prefers-reduced-motion: no-preference){
+  .g-bar{transform-box:fill-box;transform-origin:center bottom;animation:sprout .5s cubic-bezier(.2,.8,.3,1) both}
+  .g-bar:nth-of-type(2){animation-delay:.1s}
+  .g-bar:nth-of-type(3){animation-delay:.2s}
+  .g-bar:nth-of-type(4){animation-delay:.3s}
+  @keyframes sprout{from{transform:scaleY(.03)}to{transform:scaleY(1)}}
+}
+
+@media (max-width:760px){
+  .g-label{font-size:14px}
 }
 
 /* rubrika */

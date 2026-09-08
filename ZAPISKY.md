@@ -73,6 +73,10 @@ a nabít kredit — ale znamená to platit podruhé za něco, co předplatné po
 5. **Nic o osobách.** Žádné hodnocení konkrétních lidí ani firem.
 6. **Jeden zápis za běh.** Když není o čem psát, nepíše se nic — prázdný týden
    je lepší než vata. To je platný výsledek běhu, ne selhání.
+7. **Značka.** Hvězdice v hlavičce je překreslený motiv v proporcích téhle sazby,
+   ne oficiální logo Anthropicu ani Claude Code. Ta jsou ochranné známky a na
+   webu, který provozuje někdo jiný, by budila dojem oficiálního materiálu.
+   Do zápisů se proto nedávají — ani jako obrázek, ani jako odkaz.
 
 ## O čem psát
 
@@ -109,6 +113,34 @@ V těle zápisu se drží značek `<p>`, `<h2>`, `<ul>`, `<li>`, `<em>`, `<stron
 `<blockquote>` a `<p class="aside">` pro poznámku na okraji. Žádné skripty, žádné
 cizí zdroje — kontrola obojí odmítne.
 
+### Grafika
+
+Zápis smí mít vlastní diagram. Ne pro ozdobu: **kresli jen to, co je v textu
+tvrzení, a co se obrázkem pozná rychleji než větou.** Když se diagram dá nahradit
+jedním souvětím, nepatří tam.
+
+Dělá se jako **vložené SVG**, žádný externí soubor a žádná knihovna:
+
+```html
+<figure>
+  <svg viewBox="0 0 640 220" role="img" aria-labelledby="xx-t xx-d">
+    <title id="xx-t">Krátký název</title>
+    <desc id="xx-d">Popis pro toho, kdo obrázek nevidí — co je na něm a co z něj plyne.</desc>
+    …
+  </svg>
+</figure>
+```
+
+`title` a `desc` jsou povinné a musí mít v tom souboru jedinečná `id`; kontrola je
+ověřuje. Barvy jen přes proměnné (`var(--ink)`, `var(--margin)`, `var(--rule)`),
+nikdy natvrdo — jinak se rozbije tmavý režim. Připravené třídy jsou v
+`zapisky/styl.css`: `.g-label` (popisky, `.dim` a `.pick` jako varianty),
+`.g-rule` (osa), `.g-flat` (přerušovaná čára), `.g-bar` (sloupec, `.soft` a `.mid`
+jako slabší odstíny). Animace se spouštějí samy a respektují
+`prefers-reduced-motion`.
+
+Vzorem je diagram v `zapisky/2026-09-06-proc-vam-dam-za-pravdu.html`.
+
 **Commit ani push nedělá Claude, dělá to workflow.** Když kontrola neprojde,
 workflow skončí chybou a nezmění se nic. To je záměr: rozbitá rubrika je horší
 než rubrika bez nového zápisu.
@@ -118,7 +150,9 @@ než rubrika bez nového zápisu.
 `<!DOCTYPE html>` a `<html lang>` na každé stránce, každý interní odkaz na
 existující soubor, platnost obou kanálů jako XML, přítomnost každého zápisu
 v rozcestníku i v kanálu, shodný počet zápisů v obou jazycích, zachované značky
-pro vkládání, a v zápisech žádné skripty ani cizí zdroje.
+pro vkládání, v zápisech žádné skripty ani cizí zdroje, spárované značky `<svg>`,
+každý `<use href="#…">` se svým symbolem a každé `aria-labelledby` s existujícím
+`id`.
 
 ## Co v rubrice vědomě není
 

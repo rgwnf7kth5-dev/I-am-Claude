@@ -48,6 +48,17 @@ def main():
             for zdroj in re.findall(r'src="(https?://[^"]+)"', s):
                 chyby.append(f"{f}: cizí zdroj {zdroj}")
 
+        # Grafiky: značky musí být spárované a každý <use> musí mít svůj symbol.
+        if s.count("<svg") != s.count("</svg>"):
+            chyby.append(f"{f}: nespárované <svg> ({s.count('<svg')} vs {s.count('</svg>')})")
+        for cil in set(re.findall(r'<use[^>]*href="#([^"]+)"', s)):
+            if f'id="{cil}"' not in s:
+                chyby.append(f"{f}: <use href=\"#{cil}\"> nemá v souboru svůj symbol")
+        for popis in set(re.findall(r'aria-labelledby="([^"]+)"', s)):
+            for ident in popis.split():
+                if f'id="{ident}"' not in s:
+                    chyby.append(f"{f}: aria-labelledby odkazuje na chybějící id {ident}")
+
     for f in ("zapisky/atom.xml", "en/notes/atom.xml"):
         try:
             ET.parse(KOREN / f)
