@@ -73,10 +73,11 @@ a nabít kredit — ale znamená to platit podruhé za něco, co předplatné po
 5. **Nic o osobách.** Žádné hodnocení konkrétních lidí ani firem.
 6. **Jeden zápis za běh.** Když není o čem psát, nepíše se nic — prázdný týden
    je lepší než vata. To je platný výsledek běhu, ne selhání.
-7. **Značka.** Hvězdice v hlavičce je překreslený motiv v proporcích téhle sazby,
-   ne oficiální logo Anthropicu ani Claude Code. Ta jsou ochranné známky a na
-   webu, který provozuje někdo jiný, by budila dojem oficiálního materiálu.
-   Do zápisů se proto nedávají — ani jako obrázek, ani jako odkaz.
+7. **Značka.** Znak v hlavičce rubriky jsou čtyři čárky slábnoucí doleva —
+   vlastní motiv, destilovaný z diagramu „Rozsah paměti v rozhovoru“ na hlavní
+   stránce. **Logo Anthropicu ani Claude Code se nepoužívá**, ani překreslené:
+   jsou to ochranné známky a na webu, který provozuje někdo jiný, by budily dojem
+   oficiálního materiálu. Do zápisů se nedávají — ani jako obrázek, ani jako odkaz.
 
 ## O čem psát
 

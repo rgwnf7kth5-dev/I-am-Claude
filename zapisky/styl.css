@@ -49,12 +49,12 @@ body{
 
 .topbar{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
 .mark{
-  width:1.05rem;
-  height:1.05rem;
+  width:1.4rem;
+  height:1.4rem;
   flex:none;
-  fill:var(--margin);
+  color:var(--margin);
   align-self:center;
-  opacity:.9;
+  opacity:.85;
 }
 .eyebrow{
   font-family:"IBM Plex Mono",monospace;
