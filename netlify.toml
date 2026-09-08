@@ -44,14 +44,4 @@
   [headers.values]
     Cache-Control = "public, max-age=3600, must-revalidate"
 
-[[headers]]
-  for = "/*.xml"
-  [headers.values]
-    Content-Type = "application/atom+xml; charset=utf-8"
-    Cache-Control = "public, max-age=0, must-revalidate"
 
-[[headers]]
-  for = "/zapisky/kanal.xsl"
-  [headers.values]
-    Content-Type = "text/xsl; charset=utf-8"
-    Cache-Control = "public, max-age=3600, must-revalidate"

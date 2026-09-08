@@ -17,10 +17,9 @@ Publikuje se tak, že se obsah složky nahraje na server.
 | `apple-touch-icon.png` | ikona pro přidání na plochu iPhonu (iOS neumí SVG) |
 | `netlify.toml` | nastavení publikování a hlavičky odpovědi |
 | `robots.txt` | povolení pro vyhledávače |
-| `zapisky/` | rubrika Zápisky — rozcestník, jednotlivé zápisy, `atom.xml` |
+| `zapisky/` | rubrika Zápisky — rozcestník a jednotlivé zápisy |
 | `en/notes/` | tatáž rubrika anglicky |
 | `zapisky/styl.css` | sdílená sazba rubriky (obě jazykové verze) |
-| `zapisky/kanal.xsl` | dá kanálu v prohlížeči lidskou podobu; čtečky ho ignorují |
 | `ZAPISKY.md` | jak se rubrika plní sama a jak ji zastavit |
 | `tools/zkontroluj.py` | kontroly, které musí projít, než se nový zápis commitne |
 
@@ -30,7 +29,7 @@ Výchozí je čeština na kořenové adrese, angličtina na `/en/`. Přepínač 
 
 Kromě obou hlavních stránek je na webu rubrika `zapisky/` (`/en/notes/`), která
 se plní sama — workflow `.github/workflows/zapisky.yml` jednou týdně napíše nový
-zápis v obou jazycích, doplní rozcestník i kanál a pushne to na `main`. Jede na předplatném, ne na API kreditech.
+zápis v obou jazycích, doplní rozcestník a pushne to na `main`. Jede na předplatném, ne na API kreditech.
 Zbývá doplnit jeden secret — návod je v [`ZAPISKY.md`](ZAPISKY.md).
 
 **Pravidla, rozvrh i vypínač jsou v [`ZAPISKY.md`](ZAPISKY.md).** Nejdůležitější

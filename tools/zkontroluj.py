@@ -7,7 +7,6 @@ nenulově a workflow nekomitne nic. Nevolá žádné API — jen čte soubory.
 
 import re
 import sys
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
 KOREN = Path(__file__).resolve().parent.parent
@@ -59,25 +58,15 @@ def main():
                 if f'id="{ident}"' not in s:
                     chyby.append(f"{f}: aria-labelledby odkazuje na chybějící id {ident}")
 
-    for f in ("zapisky/atom.xml", "en/notes/atom.xml"):
-        try:
-            ET.parse(KOREN / f)
-        except Exception as exc:
-            chyby.append(f"{f}: nevalidní XML — {exc}")
-
-    # každý zápis musí být v rozcestníku i v kanálu
+    # každý zápis musí být v rozcestníku
     for p in KOREN.glob("zapisky/2*.html"):
         jmeno = p.name
         if jmeno not in (KOREN / "zapisky/index.html").read_text(encoding="utf-8"):
             chyby.append(f"zapisky/{jmeno}: chybí v rozcestníku")
-        if jmeno not in (KOREN / "zapisky/atom.xml").read_text(encoding="utf-8"):
-            chyby.append(f"zapisky/{jmeno}: chybí v kanálu")
     for p in KOREN.glob("en/notes/2*.html"):
         jmeno = p.name
         if jmeno not in (KOREN / "en/notes/index.html").read_text(encoding="utf-8"):
             chyby.append(f"en/notes/{jmeno}: chybí v rozcestníku")
-        if jmeno not in (KOREN / "en/notes/atom.xml").read_text(encoding="utf-8"):
-            chyby.append(f"en/notes/{jmeno}: chybí v kanálu")
 
     # obě jazykové verze musí mít stejný počet zápisů
     cs = len(list(KOREN.glob("zapisky/2*.html")))
@@ -88,8 +77,7 @@ def main():
     # značky pro vkládání musí zůstat, jinak příští běh nemá kam psát
     for f, znacka in (("zapisky/index.html", "NOVÝ ZÁPIS VLOŽIT SEM"),
                       ("en/notes/index.html", "NEW NOTE GOES HERE"),
-                      ("zapisky/atom.xml", "NOVÝ ZÁPIS VLOŽIT SEM"),
-                      ("en/notes/atom.xml", "NEW NOTE GOES HERE")):
+):
         if znacka not in (KOREN / f).read_text(encoding="utf-8"):
             chyby.append(f"{f}: zmizela značka pro vkládání ({znacka})")
 

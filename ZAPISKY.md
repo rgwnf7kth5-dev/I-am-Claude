@@ -105,10 +105,9 @@ Okruh rubriky: **jak spolu vycházejí jazykový model a člověk.**
    Názvy souborů: `RRRR-MM-DD-slug.html`, slug bez diakritiky.
 4. Doplní odkaz do `zapisky/index.html` a `en/notes/index.html` — nahoru, na místo
    označené komentářem `NOVÝ ZÁPIS VLOŽIT SEM` / `NEW NOTE GOES HERE`. **Ta značka
-   tam musí zůstat**, jinak nemá příští běh kam psát.
-5. Doplní `<entry>` do `zapisky/atom.xml` a `en/notes/atom.xml` (taky na označené
-   místo) a přepíše `<updated>` u celého kanálu.
-6. Spustí `python3 tools/zkontroluj.py` a opraví, co skript vypíše.
+   tam musí zůstat**, jinak nemá příští běh kam psát. Rubrika **nemá odebíratelný
+   kanál** a nemá ho dostat; kdo chce vědět o novém zápisu, otevře si rozcestník.
+5. Spustí `python3 tools/zkontroluj.py` a opraví, co skript vypíše.
 
 V těle zápisu se drží značek `<p>`, `<h2>`, `<ul>`, `<li>`, `<em>`, `<strong>`,
 `<blockquote>` a `<p class="aside">` pro poznámku na okraji. Žádné skripty, žádné
@@ -149,8 +148,8 @@ než rubrika bez nového zápisu.
 ### Co `tools/zkontroluj.py` hlídá
 
 `<!DOCTYPE html>` a `<html lang>` na každé stránce, každý interní odkaz na
-existující soubor, platnost obou kanálů jako XML, přítomnost každého zápisu
-v rozcestníku i v kanálu, shodný počet zápisů v obou jazycích, zachované značky
+existující soubor, přítomnost každého zápisu
+v rozcestníku, shodný počet zápisů v obou jazycích, zachované značky
 pro vkládání, v zápisech žádné skripty ani cizí zdroje, spárované značky `<svg>`,
 každý `<use href="#…">` se svým symbolem a každé `aria-labelledby` s existujícím
 `id`.
