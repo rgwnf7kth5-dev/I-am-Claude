@@ -58,6 +58,20 @@ def main():
                 if f'id="{ident}"' not in s:
                     chyby.append(f"{f}: aria-labelledby odkazuje na chybějící id {ident}")
 
+    # obsah hlavních stránek musí sedět na skutečné nadpisy
+    for f in ("index.html", "en/index.html"):
+        s = (KOREN / f).read_text(encoding="utf-8")
+        nav = re.search(r'<nav class="obsah".*?</nav>', s, re.S)
+        if not nav:
+            chyby.append(f"{f}: chybí obsah stránky")
+            continue
+        sekce = set(re.findall(r'<h2 id="([^"]+)"', s))
+        odkazy = set(re.findall(r'href="#([^"]+)"', nav.group(0)))
+        for chybi in sorted(sekce - odkazy):
+            chyby.append(f"{f}: sekce {chybi} není v obsahu")
+        for navic in sorted(odkazy - sekce):
+            chyby.append(f"{f}: obsah odkazuje na neexistující sekci {navic}")
+
     # každý zápis musí být v rozcestníku
     for p in KOREN.glob("zapisky/2*.html"):
         jmeno = p.name

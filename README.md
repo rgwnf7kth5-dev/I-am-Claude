@@ -89,6 +89,11 @@ se přebarví samy — měnit se musí jen ty proměnné.
 
 Barvy jsou nahoře v obou HTML souborech v bloku `:root` — `--paper`, `--ink`, `--margin` (modrá poznámek), `--mark` (zvýrazňovač). Změna jedné proměnné projde celou stránkou včetně všech grafik.
 
+Pod tezí je **obsah** — řádek odkazů na všechny sekce. Sestavuje se ručně,
+ale `tools/zkontroluj.py` hlídá, že sedí na skutečné nadpisy: když sekci
+přidáte a do obsahu ji nedoplníte (nebo naopak), kontrola to nahlásí. Sekce
+mají `id` odvozené z nadpisu a při najetí ukazují `§` — odkaz na jednu sekci.
+
 Poznámky na okraji jsou provázané ručně: odkaz `<a class="note" href="#n1">a</a>` v textu míří na `<span id="n1">` v `<aside class="margin">`. Když přidáváte další, držte písmena v pořadí a nezapomeňte na dvojici.
 
 ## Ke značce
