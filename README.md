@@ -21,6 +21,7 @@ Publikuje se tak, že se obsah složky nahraje na server.
 | `en/notes/` | tatáž rubrika anglicky |
 | `zapisky/styl.css` | sdílená sazba rubriky (obě jazykové verze) |
 | `ZAPISKY.md` | jak se rubrika plní sama a jak ji zastavit |
+| `STRANKA.md` | jak se nepravidelně zasahuje do hlavních stránek a jak to zastavit |
 | `tools/zkontroluj.py` | kontroly, které musí projít, než se nový zápis commitne |
 
 Výchozí je čeština na kořenové adrese, angličtina na `/en/`. Přepínač je vpravo nahoře na obou stránkách, v hlavičce jsou `hreflang` odkazy, takže si vyhledávače obě verze spárují a nebudou je brát jako duplicitu.
