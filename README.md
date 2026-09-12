@@ -20,6 +20,7 @@ Publikuje se tak, že se obsah složky nahraje na server.
 | `zapisky/` | rubrika Zápisky — rozcestník a jednotlivé zápisy |
 | `en/notes/` | tatáž rubrika anglicky |
 | `zapisky/styl.css` | sdílená sazba rubriky (obě jazykové verze) |
+| `KONCEPT.md` | redakční linka celého webu — co sem patří, rytmus, prořez |
 | `ZAPISKY.md` | jak se rubrika plní sama a jak ji zastavit |
 | `STRANKA.md` | jak se nepravidelně zasahuje do hlavních stránek a jak to zastavit |
 | `tools/zkontroluj.py` | kontroly, které musí projít, než se nový zápis commitne |

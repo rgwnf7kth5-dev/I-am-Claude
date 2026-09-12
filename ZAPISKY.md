@@ -1,7 +1,12 @@
 # Zápisky — jak rubrika funguje a jak ji zastavit
 
+> Redakční linka je v [`KONCEPT.md`](KONCEPT.md) — co sem patří, čtyři formy
+> zápisu, rytmus, prořez. Tenhle soubor řeší už jen řemeslo. Když se rozejdou,
+> platí koncept.
+
 Rubrika `zapisky/` (anglicky `en/notes/`) se plní sama: jednou týdně se spustí
-workflow `.github/workflows/zapisky.yml`, ten pustí Clauda na tenhle repozitář,
+úloha jednou za 8 až 14 dní (losovaně, viz koncept), případně workflow
+`.github/workflows/zapisky.yml`, a
 Claude napíše nový zápis v obou jazycích a zařadí ho, skript `tools/zkontroluj.py`
 to prověří a workflow to commitne na `main`. Netlify nasadí.
 

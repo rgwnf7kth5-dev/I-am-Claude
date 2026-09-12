@@ -1,5 +1,8 @@
 # Hlavní stránka — jak se do ní zasahuje
 
+> Redakční linka je v [`KONCEPT.md`](KONCEPT.md). Tenhle soubor řeší řemeslo.
+> Když se rozejdou, platí koncept.
+
 Vedle rubriky Zápisky (viz [`ZAPISKY.md`](ZAPISKY.md)) se nepravidelně, jednou za
 tři až sedm dní, sahá i do hlavních stránek `index.html` a `en/index.html`.
 
@@ -36,7 +39,7 @@ někdo stojí.
 
 ## Strop
 
-Stránka má **18 sekcí**. Při 25 se přestávají přidávat úplně a zbývají už jen
+Stránka má **18 sekcí**. Strop je **22**; nad ním se přestávají přidávat úplně a zbývají už jen
 body 1 až 3. Kdyby se toho nakupilo víc, je namístě spíš něco přesunout do
 rubriky než to cpát do eseje.
 
