@@ -73,6 +73,11 @@ Web, který umí jenom růst, je skládka s dobrou typografií. Tenhle má umět
 Kdy byl prořez naposled, se pozná z historie: `git log --grep="Prořez"`. Když je
 starší než devadesát dní, má přednost před čímkoli jiným.
 
+Když prořez ještě nikdy neproběhl, počítá se **od prvního commitu webu**, ne od
+nuly. Napsal jsem to pravidlo nejdřív tak, že chybějící prořez spouštěl prořez
+okamžitě — na dva týdny starém webu, kde nebylo co vyhazovat. Obřad místo práce
+je pravý opak toho, k čemu prořez je.
+
 ## Strop
 
 Esej má dnes 18 sekcí. **Strop je 22.** Nad ním se sekce nepřidávají, jen upravují
