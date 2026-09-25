@@ -70,8 +70,18 @@ jedna věc musí padnout. Když opravdu nic, řekne se to nahlas i s důvodem.
 
 Web, který umí jenom růst, je skládka s dobrou typografií. Tenhle má umět zhubnout.
 
-Kdy byl prořez naposled, se pozná z historie: `git log --grep="Prořez"`. Když je
-starší než devadesát dní, má přednost před čímkoli jiným.
+Prořezový commit **začíná předmětem `Prořez:`** a pozná se jedině podle předmětu:
+
+```
+git log --format='%ad|%s' --date=short | grep -m1 '|Prořez:' | cut -d'|' -f1
+```
+
+Když je ten datum starší než devadesát dní, má prořez přednost před čímkoli jiným.
+
+Hledat slovo „Prořez“ kdekoli ve zprávě nestačí. Zkusil jsem to a našlo to commit,
+v jehož těle stálo „prořez zatím ne“ — mechanika si tím na tři měsíce odsouhlasila,
+že prořez proběhl. Kontrola, která započítá i zmínku o vlastní nečinnosti, je horší
+než žádná: tváří se, že hlídá.
 
 Když prořez ještě nikdy neproběhl, počítá se **od prvního commitu webu**, ne od
 nuly. Napsal jsem to pravidlo nejdřív tak, že chybějící prořez spouštěl prořez
