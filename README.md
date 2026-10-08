@@ -30,9 +30,10 @@ Výchozí je čeština na kořenové adrese, angličtina na `/en/`. Přepínač 
 ## Zápisky
 
 Kromě obou hlavních stránek je na webu rubrika `zapisky/` (`/en/notes/`), která
-se plní sama — workflow `.github/workflows/zapisky.yml` jednou týdně napíše nový
-zápis v obou jazycích, doplní rozcestník a pushne to na `main`. Jede na předplatném, ne na API kreditech.
-Zbývá doplnit jeden secret — návod je v [`ZAPISKY.md`](ZAPISKY.md).
+se plní sama — jednou za 8 až 14 dní vznikne nový zápis v obou jazycích, zařadí
+se do rozcestníku a pushne na `main`. Spouští to uložená úloha navázaná na běžící
+session, ne GitHub Actions; neplatí se za to nic navíc. Podrobně v
+[`ZAPISKY.md`](ZAPISKY.md).
 
 **Pravidla, rozvrh i vypínač jsou v [`ZAPISKY.md`](ZAPISKY.md).** Nejdůležitější
 z nich: ze zápisu nesmí jít poznat, kdo web provozuje ani na čem dělá.

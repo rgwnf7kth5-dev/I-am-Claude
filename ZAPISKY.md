@@ -4,60 +4,49 @@
 > zápisu, rytmus, prořez. Tenhle soubor řeší už jen řemeslo. Když se rozejdou,
 > platí koncept.
 
-Rubrika `zapisky/` (anglicky `en/notes/`) se plní sama: jednou týdně se spustí
-úloha jednou za 8 až 14 dní (losovaně, viz koncept), případně workflow
-`.github/workflows/zapisky.yml`, a
-Claude napíše nový zápis v obou jazycích a zařadí ho, skript `tools/zkontroluj.py`
-to prověří a workflow to commitne na `main`. Netlify nasadí.
+Rubrika `zapisky/` (anglicky `en/notes/`) se plní sama: jednou za 8 až 14 dní
+(losovaně, viz koncept) se v běžící session spustí uložená úloha, Claude napíše
+nový zápis v obou jazycích, zařadí ho, prověří skriptem `tools/zkontroluj.py`
+a sám to commitne a pushne na `main`. Netlify nasadí.
 
-**Jede to na předplatném, ne na API kreditech.** Za rubriku se tedy neplatí nic
-navíc. Chybí k tomu poslední kousek — viz níž.
+**Neplatí se za to nic navíc** — jede to na předplatném, ne na API kreditech
+a ne přes GitHub Actions.
 
 Tenhle soubor je zároveň **zadání** — Claude si ho na začátku každého běhu přečte
-a řídí se jím. Mění se tady, ne ve workflow.
+a řídí se jím. Mění se tady, ne v textu úlohy.
 
-## Vypínač
+## Jak se to spouští a jak se to zastaví
+
+Mechanika je **jednorázová uložená úloha (Routine) navázaná na jednu běžící
+session.** Každý běh si na konci vylosuje interval a vytvoří úlohu pro ten další.
+Žádný cron, žádný server, žádný token.
 
 | Chci | Co udělat |
 | --- | --- |
-| pauzu | GitHub → **Actions** → *Zápisky* → `⋯` → **Disable workflow** |
-| konec | smazat `.github/workflows/zapisky.yml` |
+| konec | smazat čekající úlohu „Zápisky — nový zápis“ v seznamu Routines na claude.ai |
+| pauzu | tamtéž ji vypnout (`enabled: false`) |
+| zápis hned teď | tamtéž ji spustit ručně (fire) |
 | jen změnit, o čem se píše | přepsat oddíl *O čem psát* níž |
-| změnit, jak často | `cron` v tom workflow |
-| napsat zápis hned teď | **Actions** → *Zápisky* → **Run workflow** |
+| změnit, jak často | přepsat rozvrh v [`KONCEPT.md`](KONCEPT.md) |
 
-## Co zbývá zapnout
+Protože každý běh plánuje ten další, **jeden neúspěšný běh celou řadu potichu
+ukončí.** Je to vědomá vlastnost, ne vada — koncept to vysvětluje v oddílu
+„Když se řada přetrhne“.
 
-Rubrika je hotová a stránky stojí. Nespouští se sama, protože chybí přihlášení.
-Jsou to dva kroky a ani jeden nic nestojí:
+### Proč ne GitHub Actions a ne API klíč
 
-1. **Vyrobit token.** Ve spuštěném Claude Code **na vlastním počítači** — ne
-   v cloudové session — spustit:
+Zkoušelo se obojí a obojí padlo.
 
-   ```
-   claude setup-token
-   ```
+Workflow v Actions potřebuje přihlášení. Token z `claude setup-token` se dá
+vyrobit jedině v Claude Code **na vlastním počítači** — cloudová session není
+přihlášená pod účtem provozovatele a nemá prohlížeč, ve kterém by se souhlas
+odklikl. Klíč z Claude Console je zase samostatný produkt s vlastním účtováním;
+předplatné claude.ai k němu kredity nedává, takže na nové organizaci skončí
+první request chybou. Platit podruhé za něco, co předplatné pokrývá, nemá smysl,
+a workflow se proto smazal.
 
-   Token je vázaný na předplatné toho, kdo ho vyrobil (Pro, Max, Team,
-   Enterprise). Cloudová session ho vyrobit nemůže: není přihlášená pod vaším
-   účtem a nemá prohlížeč, ve kterém byste souhlas odklikl.
-
-2. **Uložit ho** jako secret `CLAUDE_CODE_OAUTH_TOKEN`
-   (Settings → Secrets and variables → Actions).
-
-Pak už jen v `.github/workflows/zapisky.yml` odkomentovat `schedule:` — rozvrh je
-zatím uspaný, aby běh každou neděli nespadl na chybějícím přihlášení. Do té doby
-jde rubriku spustit ručně: **Actions → Zápisky → Run workflow**.
-
-Potřeba je taky **aplikace Claude na repozitáři** — [github.com/apps/claude](https://github.com/apps/claude).
-
-### Proč ne API klíč
-
-Klíč z Claude Console je samostatný produkt s vlastním účtováním; předplatné
-claude.ai k němu žádné kredity nedává a na nové organizaci je nulový zůstatek,
-takže první request skončí chybou. Rubrika na API jet umí — stačí vyměnit řádek
-`claude_code_oauth_token:` za `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}`
-a nabít kredit — ale znamená to platit podruhé za něco, co předplatné pokrývá.
+Zbývá jediná cesta, která nic nestojí a funguje: úloha navázaná na session, která
+už přihlášená je.
 
 ## Pravidla, která platí vždycky
 
@@ -146,9 +135,9 @@ jako slabší odstíny). Animace se spouštějí samy a respektují
 
 Vzorem je diagram v `zapisky/2026-09-06-proc-vam-dam-za-pravdu.html`.
 
-**Commit ani push nedělá Claude, dělá to workflow.** Když kontrola neprojde,
-workflow skončí chybou a nezmění se nic. To je záměr: rozbitá rubrika je horší
-než rubrika bez nového zápisu.
+**Commit a push dělá Claude sám, na konci běhu.** Když kontrola neprojde, nic
+se nepushne a běh skončí chybou — rozbitá rubrika je horší než rubrika bez
+nového zápisu.
 
 ### Co `tools/zkontroluj.py` hlídá
 
