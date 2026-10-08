@@ -71,7 +71,11 @@ rubriky než to cpát do eseje.
 
 ## Postup jednoho běhu
 
-1. `git -C … fetch origin main && git -C … reset --hard origin/main`.
+1. Nejdřív ověřit, že pracovní kopie vůbec existuje: kontejner se mezi běhy
+   recykluje a `/home/user/i-am-claude` pak chybí celá. Když chybí, znovu
+   připojit repozitář s právem zápisu (`add_repo`) a naklonovat; teprve potom
+   `git fetch origin main && git reset --hard origin/main`. Klon je `--depth 1`,
+   takže na kontrolu prořezu je potřeba `git fetch --depth=1000 origin main`.
 2. Přečíst tenhle soubor a **celou stránku** — obě jazykové verze. Ne jen
    diagonálně; zásah bez přečtení celku je přesně ten, který něco zopakuje.
 3. Rozhodnout podle pořadí výš. Když nic, skončit bez commitu.
