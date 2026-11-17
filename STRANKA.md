@@ -39,7 +39,7 @@ někdo stojí.
 
 ## Strop
 
-Stránka má **18 sekcí**. Strop je **22**; nad ním se přestávají přidávat úplně a zbývají už jen
+Stránka má **19 sekcí**. Strop je **22**; nad ním se přestávají přidávat úplně a zbývají už jen
 body 1 až 3. Kdyby se toho nakupilo víc, je namístě spíš něco přesunout do
 rubriky než to cpát do eseje.
 

@@ -90,7 +90,7 @@ je pravý opak toho, k čemu prořez je.
 
 ## Strop
 
-Esej má dnes 18 sekcí. **Strop je 22.** Nad ním se sekce nepřidávají, jen upravují
+Esej má dnes 19 sekcí. **Strop je 22.** Nad ním se sekce nepřidávají, jen upravují
 a škrtají. Co se nevejde, patří do rubriky — nebo nikam.
 
 ## Co se nikdy nestane
